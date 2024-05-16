@@ -1,0 +1,18 @@
+import requests
+
+BASE_URL = "http://127.0.0.1:8000"
+
+
+def test_create_bet():
+    bet_data = {"event_id": "1", "amount": 10.0}
+    response = requests.post(f"{BASE_URL}/bets", json=bet_data)
+
+    assert response.status_code == 200
+    assert "bet_id" in response.json()
+
+
+def test_read_bets():
+    # Отправляем GET запрос для получения истории ставок
+    response = requests.get(f"{BASE_URL}/bets")
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
