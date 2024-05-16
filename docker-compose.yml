@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  myapp:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    command: uvicorn myapp.main:app --host 0.0.0.0 --port 8000 --reload
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
