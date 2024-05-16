@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 
+from myapp.api import bets, events
 from myapp.middlewares import setup_cors_middleware
 
 
@@ -28,3 +29,7 @@ app.openapi = custom_openapi
 @app.get("/openapi.json", include_in_schema=False)
 async def get_open_api_endpoint():
     return app.openapi()
+
+
+app.include_router(bets.router, prefix="/bets", tags=["bets"])
+app.include_router(events.router, prefix="/events", tags=["events"])
